@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span data-translate="alertSystemApp.incident.detail.title">Incident</span> {{vm.incident.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="alertSystemApp.incident.kind">Kind</span></dt>
+        <dd>
+            <span>{{vm.incident.kind}}</span>
+        </dd>
+        <dt><span data-translate="alertSystemApp.incident.location">Location</span></dt>
+        <dd>
+            <span>{{vm.incident.location}}</span>
+        </dd>
+        <dt><span data-translate="alertSystemApp.incident.serviceKind">Service Kind</span></dt>
+        <dd>
+            <span>{{vm.incident.serviceKind}}</span>
+        </dd>
+        <dt><span data-translate="alertSystemApp.incident.lifeDanger">Life Danger</span></dt>
+        <dd>
+            <span>{{vm.incident.lifeDanger}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="incident-detail.edit({id:vm.incident.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

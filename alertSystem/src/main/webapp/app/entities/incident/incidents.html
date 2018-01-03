@@ -1,0 +1,62 @@
+<div>
+    <h2 data-translate="alertSystemApp.incident.home.title">Incidents</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="incident.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="alertSystemApp.incident.home.createLabel">
+                        Create new Incident
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="alertSystemApp.incident.kind">Kind</span></th>
+                    <th><span data-translate="alertSystemApp.incident.location">Location</span></th>
+                    <th><span data-translate="alertSystemApp.incident.serviceKind">Service Kind</span></th>
+                    <th><span data-translate="alertSystemApp.incident.lifeDanger">Life Danger</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="incident in vm.incidents track by incident.id">
+                    <td><a ui-sref="incident-detail({id:incident.id})">{{incident.id}}</a></td>
+                    <td>{{incident.kind}}</td>
+                    <td>{{incident.location}}</td>
+                    <td>{{incident.serviceKind}}</td>
+                    <td>{{incident.lifeDanger}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="incident-detail({id:incident.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="incident.edit({id:incident.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="incident.delete({id:incident.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

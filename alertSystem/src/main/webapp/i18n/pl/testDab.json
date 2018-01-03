@@ -1,0 +1,22 @@
+{
+    "alertSystemApp": {
+        "testDab" : {
+            "home": {
+                "title": "Test Dabs",
+                "createLabel": "Dodaj Test Dab",
+                "createOrEditLabel": "Dodaj lub edytuj: Test Dab"
+            },
+            "created": "Utworzono nowy Test Dab z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Test Dab z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Test Dab z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Test Dab {{ id }}?"
+            },
+            "detail": {
+                "title": "Test Dab"
+            },
+            "name": "Name",
+            "second": "Second"
+        }
+    }
+}

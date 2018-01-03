@@ -1,0 +1,24 @@
+{
+    "alertSystemApp": {
+        "incident" : {
+            "home": {
+                "title": "Incidents",
+                "createLabel": "Dodaj Incident",
+                "createOrEditLabel": "Dodaj lub edytuj: Incident"
+            },
+            "created": "Utworzono nowy Incident z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Incident z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Incident z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Incident {{ id }}?"
+            },
+            "detail": {
+                "title": "Incident"
+            },
+            "kind": "Kind",
+            "location": "Location",
+            "serviceKind": "Service Kind",
+            "lifeDanger": "Life Danger"
+        }
+    }
+}

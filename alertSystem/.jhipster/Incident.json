@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "kind",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "location",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "serviceKind",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lifeDanger",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20170813150126",
+    "dto": "no",
+    "service": "serviceClass",
+    "entityTableName": "incident",
+    "pagination": "no"
+}
