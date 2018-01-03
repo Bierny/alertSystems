@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
  */
 public class MainClassJava {
 
-  private final static String QUEUE_NAME = "hello";
+  private final static String QUEUE_NAME = "alertSystem";
 
   public static void main(String[] argv)
       throws UnknownHostException,java.io.IOException,

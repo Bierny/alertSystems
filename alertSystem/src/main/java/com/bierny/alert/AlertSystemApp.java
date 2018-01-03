@@ -3,10 +3,13 @@ package com.bierny.alert;
 import com.bierny.alert.config.ApplicationProperties;
 import com.bierny.alert.config.DefaultProfileUtil;
 
+import com.bierny.alert.service.SaveAlertService;
+import com.rabbitmq.client.*;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.*;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -17,21 +20,21 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Consumer;
-import com.rabbitmq.client.DefaultConsumer;
+import java.util.concurrent.TimeoutException;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 @EnableDiscoveryClient
 public class AlertSystemApp {
+
+    @Autowired
+    private SaveAlertService saveAlertService;
 
     private static final Logger log = LoggerFactory.getLogger(AlertSystemApp.class);
 
@@ -49,7 +52,7 @@ public class AlertSystemApp {
      * You can find more information on how profiles work with JHipster on <a href="https://jhipster.github.io/profiles/">https://jhipster.github.io/profiles/</a>.
      */
     @PostConstruct
-    public void initApplication() {
+    public void initApplication() throws IOException, TimeoutException {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
         if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
             log.error("You have misconfigured your application! It should not run " +
@@ -59,6 +62,23 @@ public class AlertSystemApp {
             log.error("You have misconfigured your application! It should not " +
                 "run with both the 'dev' and 'cloud' profiles at the same time.");
         }
+
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("localhost");
+        Connection connection = factory.newConnection();
+        Channel channel = connection.createChannel();
+
+        channel.queueDeclare("alertSystem", false, false, false, null);
+        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+
+        Consumer consumer = new DefaultConsumer(channel){
+            @Override
+            public void handleDelivery(String consumerTag, Envelope envelope,AMQP.BasicProperties properties, byte[] body) throws IOException{
+                String message = new String(body, "UTF-8");
+                saveAlertService.saveAlertToDatabase(message);
+            }
+        };
+        channel.basicConsume("alertSystem", true, consumer);
     }
 
     /**
@@ -90,13 +110,6 @@ public class AlertSystemApp {
             env.getActiveProfiles());
 
 
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
-
-        channel.queueDeclare("alertSystem", false, false, false, null);
-        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
 
     }
