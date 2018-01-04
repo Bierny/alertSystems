@@ -4,6 +4,8 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +32,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.DefaultConsumer;
+import com.rabbitmq.client.Delivery;
+
+import java.net.URISyntaxException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -55,7 +72,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
-
+    ConnectionFactory factory = new ConnectionFactory();
+    private BlockingDeque<String> queue = new LinkedBlockingDeque<String>();
+    Thread subscribeThread;
+    Thread publishThread;
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -69,6 +89,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
+        setupConnectionFactory();
+        publishToAMQP();
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -86,12 +108,81 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                //attemptLogin();
+                publishMessage("yo");
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        final Handler incomingMessageHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+//                String message = msg.getData().getString("msg");
+//                TextView tv = (TextView) findViewById(R.id.textView);
+//                Date now = new Date();
+//                SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss");
+//                tv.append(ft.format(now) + ' ' + message + '\n');
+            }
+        };
+    }
+    void publishMessage(String message) {
+        //Adds a message to internal blocking queue
+        try {
+            Log.d("","[q] " + message);
+            queue.putLast(message);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupConnectionFactory() {
+        String uri = "127.0.0.1";
+        try {
+            factory.setAutomaticRecoveryEnabled(false);
+            factory.setUri(uri);
+        } catch (KeyManagementException | NoSuchAlgorithmException | URISyntaxException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void publishToAMQP()
+    {
+        publishThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    try {
+                        Connection connection = factory.newConnection();
+                        Channel ch = connection.createChannel();
+                        ch.confirmSelect();
+
+                        while (true) {
+                            String message = queue.takeFirst();
+                            try{
+                                ch.basicPublish("", "alertSystem", null, message.getBytes("UTF-8"));
+                                Log.d("", "[s] " + message);
+                                ch.waitForConfirmsOrDie();
+                            } catch (Exception e){
+                                Log.d("","[f] " + message);
+                                queue.putFirst(message);
+                                throw e;
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        break;
+                    } catch (Exception e) {
+                        Log.d("", "Connection broken: " + e.getClass().getName());
+                        try {
+                            Thread.sleep(5000); //sleep and then try again
+                        } catch (InterruptedException e1) {
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+        publishThread.start();
     }
 
     private void populateAutoComplete() {
