@@ -7,7 +7,7 @@
     TestDab.$inject = ['$resource', 'DateUtils'];
 
     function TestDab ($resource, DateUtils) {
-        var resourceUrl =  'api/test-dabs/:id';
+        var resourceUrl =  'api/alerts/:id';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},

@@ -1,7 +1,11 @@
 body {
-    background: #fafafa;
+    background: url("../images/background.png") no-repeat center center fixed;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+    color: #539fb6;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 /* ==========================================================================
@@ -11,55 +15,25 @@ Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
     display: none !important;
 }
 
-/* ==========================================================================
-Development Ribbon
-========================================================================== */
-.ribbon {
-    background-color: #a00;
-    box-shadow: 0 0 10px #888;
-    left: -3.5em;
-    moz-box-shadow: 0 0 10px #888;
-    moz-transform: rotate(-45deg);
-    ms-transform: rotate(-45deg);
-    o-transform: rotate(-45deg);
-    overflow: hidden;
-    position: absolute;
-    top: 40px;
-    transform: rotate(-45deg);
-    webkit-box-shadow: 0 0 10px #888;
-    webkit-transform: rotate(-45deg);
-    white-space: nowrap;
-    width: 15em;
-    z-index: 9999;
-    pointer-events: none;
-}
 
-.ribbon a {
-    border: 1px solid #faa;
-    color: #fff;
-    display: block;
-    font: bold 81.25% 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    margin: 1px 0;
-    padding: 10px 50px;
-    text-align: center;
-    text-decoration: none;
-    text-shadow: 0 0 5px #444;
-    pointer-events: none;
-}
 
 /* ==========================================================================
 Version number in navbar
 ========================================================================== */
 .navbar-version {
     font-size: 10px;
-    color: #444;
+    color: #539fb6;
 }
+.logo-txt{
+    color: #539fb6;
+}
+
 
 /* ==========================================================================
 navbar text
 ========================================================================== */
 .navbar-default .navbar-brand {
-    color: #444;
+    color: #539fb6;
 }
 
 /* ==========================================================================
@@ -77,10 +51,13 @@ Logo styles
 ========================================================================== */
 .navbar-brand.logo {
     padding: 5px 15px;
+
 }
 
 .logo .logo-img {
     height: 45px;
+    padding-bottom: 5px;
+
     display: inline-block;
 }
 
@@ -310,12 +287,16 @@ entity detail page css
 @media screen and (min-width: 768px) {
     .dl-horizontal.jh-entity-details > dt {
         margin-bottom: 15px;
+        width:260px;
     }
 
     .dl-horizontal.jh-entity-details > dd {
         border-bottom: 1px solid #eee;
         padding-left: 180px;
-        margin-left: 0;
+        margin-left: 20px;
+    }
+    .dl-horizontal.jh-entity-details > dd >span {
+        margin-left: 20px;
     }
 }
 
@@ -381,4 +362,94 @@ Social Buttons
 }
 
 
-/* jhipster-needle-css-add-main JHipster will add new css style */
+
+h1{
+    font-size: 30px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 15px;
+}
+table{
+    width:100%;
+    table-layout: fixed;
+}
+.tbl-header{
+    background-color: rgba(255,255,255,0.3);
+}
+.tbl-content{
+    height:300px;
+    overflow-x:auto;
+    margin-top: 0px;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+th{
+    padding: 20px 15px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+}
+td{
+    padding: 15px;
+    text-align: left;
+    vertical-align:middle;
+    font-weight: 300;
+    font-size: 12px;
+    color: #fff;
+    border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+
+/* demo styles */
+
+.list3{
+    background: -webkit-linear-gradient(left, #1aa8b9, #147d8a);
+    background: linear-gradient(to right, #1aa8b9, #147d8a);
+    font-family: 'Roboto', sans-serif;
+}
+section{
+    margin: 50px;
+}
+
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+.button {
+    margin-top: 10px;
+    margin-left: -5px;
+    padding: 15px 25px;
+    font-size: 46px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #1aa8b9;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #2d8eb9
+}
+
+.button:active {
+    background-color: #2d8eb9;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.btn-bierny{
+    font-size: 20px;
+
+}

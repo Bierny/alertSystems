@@ -1,5 +1,15 @@
 {
     "home": {
+        "tablename": "Zgłoszenia",
+        "rcvbutton": "Odbierz zgłoszenie",
+        "howmanynotify":"Liczba zgłoszeń",
+        "howmanydanger":"Liczba zagrożeń życia",
+        "notifier": "Zgłaszający",
+        "location":"Lokalizacja",
+        "phone":"Nr telefonu",
+        "danger":"Zagrożenie życia",
+        "kind": "Powód",
+        "other": "Inne okoliczności",
         "title": "Witamy, Java Hipsterze!",
         "subtitle": "To jest twoja strona domowa",
         "logged": {
@@ -17,3 +27,4 @@
         "github": "GitHubie"
     }
 }
+

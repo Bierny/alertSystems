@@ -3,33 +3,73 @@
     <h2><span data-translate="alertSystemApp.incident.detail.title">Incident</span> {{vm.incident.id}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
-    <dl class="dl-horizontal jh-entity-details">
-        <dt><span data-translate="alertSystemApp.incident.kind">Kind</span></dt>
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn-bierny">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="incident-detail.edit({id:vm.incident.id})" class="btn-bierny" style="margin-left: 835px;">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="alertSystemApp.incident.edit"> Edit</span>
+    </button>
+
+    <dl class="dl-horizontal jh-entity-details" style="margin-left: 210px">
+        <dt><span data-translate="alertSystemApp.incident.notifier">Kind</span></dt>
         <dd>
-            <span>{{vm.incident.kind}}</span>
+            <span>{{vm.incident.notifier.name}} {{vm.incident.notifier.surname}}</span>
         </dd>
-        <dt><span data-translate="alertSystemApp.incident.location">Location</span></dt>
+        <dt><span data-translate="alertSystemApp.incident.isNotifierVictim">Kind</span></dt>
+        <dd>
+            <span>{{vm.incident.notifier.isNotifierVictim}}</span>
+        </dd>
+        <dt><span data-translate="alertSystemApp.incident.phone">Location</span></dt>
+        <dd>
+            <span>{{vm.incident.notifier.phone}}</span>
+        </dd>
+        <dt><span data-translate="alertSystemApp.incident.location">Service Kind</span></dt>
         <dd>
             <span>{{vm.incident.location}}</span>
-        </dd>
-        <dt><span data-translate="alertSystemApp.incident.serviceKind">Service Kind</span></dt>
-        <dd>
-            <span>{{vm.incident.serviceKind}}</span>
         </dd>
         <dt><span data-translate="alertSystemApp.incident.lifeDanger">Life Danger</span></dt>
         <dd>
             <span>{{vm.incident.lifeDanger}}</span>
         </dd>
+        <dt><span data-translate="alertSystemApp.incident.serviceKind">Life Danger</span></dt>
+        <dd>
+            <span>{{vm.incident.kind}}</span>
+        </dd>
+        <dt><span data-translate="alertSystemApp.incident.other">Life Danger</span></dt>
+        <dd>
+            <span>{{vm.incident.otherCircumstances}}</span>
+        </dd>
+        <dt><span data-translate="alertSystemApp.incident.howManyVictims">Life Danger</span></dt>
+        <dd>
+            <span>{{vm.incident.howManyVictims}}</span>
+        </dd>
+        <dt><span data-translate="alertSystemApp.incident.fillingDate">Life Danger</span></dt>
+        <dd>
+            <span>{{vm.incident.fillingDate}}</span>
+        </dd>
     </dl>
 
-    <button type="submit"
-            ui-sref="{{ vm.previousState }}"
-            class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+
+
+
+    <button type="button" ui-sref="incident-detail.edit({id:vm.incident.id})" class="btn-bierny" style="margin-right: 135px;  font-size: 25px;color: black;, background-color:1aa8b9;">
+        <span class="glyphicon glyphicon-remove-circle"></span>
+        <span class="hidden-sm-down" data-translate="alertSystemApp.incident.cancel"> Edit</span>
     </button>
 
-    <button type="button" ui-sref="incident-detail.edit({id:vm.incident.id})" class="btn btn-primary">
-        <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    <button type="button" ui-sref="incident-detail.edit({id:vm.incident.id})" class="btn-bierny" style="margin-right: 135px;font-size: 25px; color: green;, background-color:1aa8b9;">
+        <span class="glyphicon glyphicon-earphone"></span>
+        <span class="hidden-sm-down" data-translate="alertSystemApp.incident.call"> Edit</span>
     </button>
+
+    <button type="button" ui-sref="incident-detail.edit({id:vm.incident.id})" class="btn-bierny" style="color: red; font-size: 25px;background-color:1aa8b9;">
+        <span class="glyphicon glyphicon-random"></span>
+        <span class="hidden-sm-down" data-translate="alertSystemApp.incident.next"> Edit</span>
+    </button>
+
+
 </div>

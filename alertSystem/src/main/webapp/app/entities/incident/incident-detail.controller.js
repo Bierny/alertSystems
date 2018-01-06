@@ -7,7 +7,7 @@
 
     IncidentDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Incident'];
 
-    function IncidentDetailController($scope, $rootScope, $stateParams, previousState, entity, Incident) {
+    function IncidentDetailController($scope, $rootScope, $stateParams, previousState, entity, TestDab) {
         var vm = this;
 
         vm.incident = entity;

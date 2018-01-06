@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jackson-mapper-asl-0.9.9-2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/jackson-mapper-asl-0.9.9-2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

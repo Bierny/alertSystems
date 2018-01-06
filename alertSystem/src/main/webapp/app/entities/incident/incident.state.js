@@ -31,7 +31,7 @@
                 }]
             }
         })
-        .state('incident-detail', {
+        .state('incident-detail2', {
             parent: 'incident',
             url: '/incident/{id}',
             data: {

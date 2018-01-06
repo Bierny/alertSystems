@@ -46,6 +46,8 @@ public class CacheConfiguration {
             cm.createCache(com.bierny.alert.domain.SocialUserConnection.class.getName(), jcacheConfiguration);
             cm.createCache(com.bierny.alert.domain.TestDab.class.getName(), jcacheConfiguration);
             cm.createCache(com.bierny.alert.domain.Incident.class.getName(), jcacheConfiguration);
+            cm.createCache(com.bierny.alert.domain.IncidentServiceEntity.class.getName(), jcacheConfiguration);
+            cm.createCache(com.bierny.alert.domain.Notifier.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

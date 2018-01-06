@@ -89,11 +89,8 @@ public class IncidentResourceIntTest {
      * if they test an entity which requires the current entity.
      */
     public static Incident createEntity(EntityManager em) {
-        Incident incident = new Incident()
-            .kind(DEFAULT_KIND)
-            .location(DEFAULT_LOCATION)
-            .serviceKind(DEFAULT_SERVICE_KIND)
-            .lifeDanger(DEFAULT_LIFE_DANGER);
+        Incident incident = new Incident();
+        incident.setLocation(DEFAULT_LOCATION);
         return incident;
     }
 
@@ -119,8 +116,6 @@ public class IncidentResourceIntTest {
         Incident testIncident = incidentList.get(incidentList.size() - 1);
         assertThat(testIncident.getKind()).isEqualTo(DEFAULT_KIND);
         assertThat(testIncident.getLocation()).isEqualTo(DEFAULT_LOCATION);
-        assertThat(testIncident.getServiceKind()).isEqualTo(DEFAULT_SERVICE_KIND);
-        assertThat(testIncident.isLifeDanger()).isEqualTo(DEFAULT_LIFE_DANGER);
     }
 
     @Test
@@ -195,10 +190,8 @@ public class IncidentResourceIntTest {
         // Update the incident
         Incident updatedIncident = incidentRepository.findOne(incident.getId());
         updatedIncident
-            .kind(UPDATED_KIND)
-            .location(UPDATED_LOCATION)
-            .serviceKind(UPDATED_SERVICE_KIND)
-            .lifeDanger(UPDATED_LIFE_DANGER);
+            .setLocation(UPDATED_LOCATION)
+         ;
 
         restIncidentMockMvc.perform(put("/api/incidents")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -211,8 +204,6 @@ public class IncidentResourceIntTest {
         Incident testIncident = incidentList.get(incidentList.size() - 1);
         assertThat(testIncident.getKind()).isEqualTo(UPDATED_KIND);
         assertThat(testIncident.getLocation()).isEqualTo(UPDATED_LOCATION);
-        assertThat(testIncident.getServiceKind()).isEqualTo(UPDATED_SERVICE_KIND);
-        assertThat(testIncident.isLifeDanger()).isEqualTo(UPDATED_LIFE_DANGER);
     }
 
     @Test

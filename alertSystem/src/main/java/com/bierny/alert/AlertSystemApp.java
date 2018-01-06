@@ -3,7 +3,14 @@ package com.bierny.alert;
 import com.bierny.alert.config.ApplicationProperties;
 import com.bierny.alert.config.DefaultProfileUtil;
 
+import com.bierny.alert.domain.Incident;
+import com.bierny.alert.domain.IncidentServiceEntity;
+import com.bierny.alert.domain.Notifier;
+import com.bierny.alert.repository.IncidentRepository;
+import com.bierny.alert.repository.IncidentServiceRepository;
+import com.bierny.alert.service.QueueIncidentsSingleton;
 import com.bierny.alert.service.SaveAlertService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.*;
 import io.github.jhipster.config.JHipsterConstants;
 
@@ -25,14 +32,19 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Queue;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 @EnableDiscoveryClient
 public class AlertSystemApp {
-
+    @Autowired
+    private IncidentRepository incidentRepository;
+    @Autowired
+    private IncidentServiceRepository incidentServiceRepository;
     @Autowired
     private SaveAlertService saveAlertService;
 
@@ -70,7 +82,7 @@ public class AlertSystemApp {
 
         channel.queueDeclare("alertSystem", false, false, false, null);
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
-
+        makeTestData();
         Consumer consumer = new DefaultConsumer(channel){
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope,AMQP.BasicProperties properties, byte[] body) throws IOException{
@@ -79,6 +91,32 @@ public class AlertSystemApp {
             }
         };
         channel.basicConsume("alertSystem", true, consumer);
+    }
+
+    private void makeTestData() {
+        Notifier notifier = new Notifier();
+        notifier.setId(1L);
+        notifier.setName("john");
+        notifier.setSurname("Blaskowicz");
+        notifier.setPhone("656565135135");
+        for(int i = 0; i <5; i++) {
+            Incident incident = new Incident();
+            incident.setIsNotifierVictim(false);
+            incident.setKind("wypadek");
+            incident.setLifeDanger(true);
+            incident.setLocation("123123x123123123");
+            incident.setNotifier(notifier);
+            incident.setOtherCircumstances("nic ciekawego");
+            incident.setSufferer(false);
+            incident.setHowManyVictims(i);
+            incidentRepository.save(incident);
+
+        }
+
+       Queue queue = QueueIncidentsSingleton.getInstance().getQueue();
+        queue.addAll(incidentRepository.findAll().stream().collect(Collectors.toList()));
+
+
     }
 
     /**
