@@ -27,7 +27,13 @@ Version number in navbar
 .logo-txt{
     color: #539fb6;
 }
+.well {
+    background-color: #343a46;
+}
+.table-striped > tbody > tr:nth-of-type(odd){
+    background-color: #5f6a80;
 
+}
 
 /* ==========================================================================
 navbar text

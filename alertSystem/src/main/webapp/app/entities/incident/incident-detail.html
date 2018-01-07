@@ -21,7 +21,12 @@
         </dd>
         <dt><span data-translate="alertSystemApp.incident.isNotifierVictim">Kind</span></dt>
         <dd>
-            <span>{{vm.incident.notifier.isNotifierVictim}}</span>
+            <span ng-if="vm.incident.isNotifierVictim">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </span>
+                                <span ng-if="!vm.incident.isNotifierVictim">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </span>
         </dd>
         <dt><span data-translate="alertSystemApp.incident.phone">Location</span></dt>
         <dd>
@@ -33,7 +38,12 @@
         </dd>
         <dt><span data-translate="alertSystemApp.incident.lifeDanger">Life Danger</span></dt>
         <dd>
-            <span>{{vm.incident.lifeDanger}}</span>
+             <span ng-if="vm.incident.lifeDanger">
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </span>
+                                <span ng-if="!vm.incident.lifeDanger">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </span>
         </dd>
         <dt><span data-translate="alertSystemApp.incident.serviceKind">Life Danger</span></dt>
         <dd>
@@ -56,17 +66,21 @@
 
 
 
-    <button type="button" ui-sref="incident-detail.edit({id:vm.incident.id})" class="btn-bierny" style="margin-right: 135px;  font-size: 25px;color: black;, background-color:1aa8b9;">
+    <button type="button" ui-sref="incident-detail.delete({id:vm.incident.id})" class="btn-bierny" style="margin-right: 135px;  font-size: 25px;color: black;, background-color:1aa8b9;">
         <span class="glyphicon glyphicon-remove-circle"></span>
         <span class="hidden-sm-down" data-translate="alertSystemApp.incident.cancel"> Edit</span>
     </button>
 
-    <button type="button" ui-sref="incident-detail.edit({id:vm.incident.id})" class="btn-bierny" style="margin-right: 135px;font-size: 25px; color: green;, background-color:1aa8b9;">
+    <button ng-if="isCall==false" type="button" ng-click="callNotifier()"  class="btn-bierny" style="margin-right: 135px;font-size: 25px; color: green;, background-color:1aa8b9;">
         <span class="glyphicon glyphicon-earphone"></span>
         <span class="hidden-sm-down" data-translate="alertSystemApp.incident.call"> Edit</span>
     </button>
+    <button ng-if="isCall==true" type="button"  class="btn-bierny" style="margin-right: 135px;font-size: 25px; color: green;, background-color:1aa8b9;">
+        <span class="glyphicon glyphicon-earphone"></span>
+        <span class="hidden-sm-down" data-translate="alertSystemApp.incident.callinprogress"> Edit</span>
+    </button>
 
-    <button type="button" ui-sref="incident-detail.edit({id:vm.incident.id})" class="btn-bierny" style="color: red; font-size: 25px;background-color:1aa8b9;">
+    <button type="button" ui-sref="incident-detail.next({id:vm.incident.id})" class="btn-bierny" style="color: red; font-size: 25px;background-color:1aa8b9;">
         <span class="glyphicon glyphicon-random"></span>
         <span class="hidden-sm-down" data-translate="alertSystemApp.incident.next"> Edit</span>
     </button>

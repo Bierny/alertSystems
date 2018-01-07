@@ -144,9 +144,9 @@
                 });
             }]
         })
-        .state('incident.delete', {
-            parent: 'incident',
-            url: '/{id}/delete',
+         .state('incident-detail.delete', {
+            parent: 'incident-detail',
+            url: '/detail/delete',
             data: {
                 authorities: ['ROLE_USER']
             },
@@ -162,12 +162,36 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('incident', null, { reload: 'incident' });
+                    $state.go('incident', null, { reload: 'false' });
                 }, function() {
                     $state.go('^');
                 });
             }]
-        });
+        }
+        ) .state('incident-detail.next', {
+                parent: 'incident-detail',
+                url: '/detail/next',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/entities/incident/incident-next-dialog.html',
+                        controller: 'IncidentNextController',
+                        controllerAs: 'vm',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Incident', function(Incident) {
+                                return Incident.get({id : $stateParams.id}).$promise;
+                            }]
+                        }
+                    }).result.then(function() {
+                            $state.go('incident', null, { reload: 'false' });
+                        }, function() {
+                            $state.go('^');
+                        });
+                }]
+            });
     }
 
 })();

@@ -47,8 +47,8 @@
                         $translatePartialLoader.addPart('incident');
                         return $translate.refresh();
                     }],
-                    entity: ['$stateParams', 'TestDab', function($stateParams, TestDab) {
-                        return TestDab.get({id : 1}).$promise;
+                    entity: ['$stateParams', 'TestDab', '$rootScope', function($stateParams, TestDab,$rootScope) {
+                        return TestDab.get({id :$rootScope.id}).$promise;
                     }],
                     previousState: ["$state", function ($state) {
                         var currentStateData = {

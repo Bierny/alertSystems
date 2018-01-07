@@ -5,11 +5,11 @@
         .module('alertSystemApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope','TestDab', 'Principal', 'LoginService', '$state','$interval'];
+    HomeController.$inject = ['$scope','TestDab', 'Principal', 'LoginService', '$state','$interval', '$rootScope'];
 
-    function HomeController ($scope, TestDab,Principal, LoginService, $state,$interval) {
+    function HomeController ($scope, TestDab,Principal, LoginService, $state,$interval,$rootScope) {
         var vm = this;
-
+        $rootScope.fromHome = true;
         vm.account = null;
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
@@ -26,6 +26,8 @@
 
             function onSuccess(data, headers) {
                $scope.alerts = data;
+                var data2 = data.filter($scope.myFilter);
+               $scope.id= $rootScope.id = data2[0].id;
                 $scope.loading=false;
             }
             function onError(error) {
@@ -38,7 +40,11 @@
                     loadAll();
                 }
 
-            }, 1000);
+            }, 50000);
+
+        $scope.myFilter = function (item) {
+            return item.incidentStatus =='SENT';
+        };
 
         function getAccount() {
             Principal.identity().then(function(account) {

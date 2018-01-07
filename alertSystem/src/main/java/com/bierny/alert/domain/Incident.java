@@ -50,7 +50,7 @@ public class Incident implements Serializable {
     @Column(name = "fillingDate")
     private Date fillingDate;
 
-    @Column(name = "user")
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
     @Column(name = "serviceDate")
     private Date serviceDate;

@@ -32,6 +32,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Queue;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
@@ -109,6 +110,7 @@ public class AlertSystemApp {
             incident.setOtherCircumstances("nic ciekawego");
             incident.setSufferer(false);
             incident.setHowManyVictims(i);
+            incident.setFillingDate(new Date());
             incidentRepository.save(incident);
 
         }

@@ -100,6 +100,9 @@
         "delete": {
             "title": "Potwierdź usunięcie"
         },
+        "next":{
+            "title": "Przekazanie odpowiednim służbom"
+        },
         "validation": {
             "required": "To pole jest wymagane.",
             "minlength": "Wartość musi mieć długość co najmniej {{min}} znaków.",

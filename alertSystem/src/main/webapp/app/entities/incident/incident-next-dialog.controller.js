@@ -3,11 +3,11 @@
 
     angular
         .module('alertSystemApp')
-        .controller('IncidentDeleteController',IncidentDeleteController);
+        .controller('IncidentNextController',IncidentNextController);
 
-    IncidentDeleteController.$inject = ['$uibModalInstance', 'entity', 'TestDab','$state'];
+    IncidentNextController.$inject = ['$uibModalInstance', 'entity', 'TestDab','$state'];
 
-    function IncidentDeleteController($uibModalInstance, entity, TestDab,$state) {
+    function IncidentNextController($uibModalInstance, entity, TestDab,$state) {
         var vm = this;
 
         vm.incident = entity;

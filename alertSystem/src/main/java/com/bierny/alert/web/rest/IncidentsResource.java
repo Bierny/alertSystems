@@ -2,10 +2,13 @@ package com.bierny.alert.web.rest;
 
 import com.bierny.alert.domain.Incident;
 import com.bierny.alert.domain.IncidentServiceEntity;
+import com.bierny.alert.domain.IncidentStatus;
 import com.bierny.alert.domain.TestDab;
 import com.bierny.alert.repository.IncidentRepository;
+import com.bierny.alert.security.SecurityUtils;
 import com.bierny.alert.service.QueueIncidentsSingleton;
 import com.bierny.alert.service.TestDabService;
+import com.bierny.alert.service.UserService;
 import com.bierny.alert.web.rest.util.HeaderUtil;
 import com.bierny.alert.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
@@ -37,9 +40,11 @@ import java.util.Queue;
 public class IncidentsResource {
 
     private final Logger log = LoggerFactory.getLogger(IncidentsResource.class);
+    @Autowired
+    private UserService userService;
 
-
-
+    @Autowired
+    private IncidentRepository incidentRepository;
 
     /**
      * GET  /test-dabs : get all the testDabs.
@@ -68,5 +73,35 @@ public class IncidentsResource {
 
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(QueueIncidentsSingleton.getInstance().peekFirstIncident()));
     }
+
+    @PutMapping("/alerts")
+    @Timed
+    public ResponseEntity<Incident> updateIncident(@RequestBody Incident incident) throws URISyntaxException {
+        log.debug("REST request to update Incident : {}", incident);
+        incident.setUser(userService.getUserWithAuthorities());
+        incidentRepository.save(incident);
+        QueueIncidentsSingleton.getInstance().updateIncident(incident);
+
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(incident));
+    }
+
+    /**
+     * DELETE  /incidents/:id : delete the "id" incident.
+     *
+     * @param id the id of the incident to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/alerts/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteIncident(@PathVariable Long id) {
+        log.debug("REST request to delete Incident : {}", id);
+        Incident incident = incidentRepository.findOne(id);
+        incident.setIncidentStatus(IncidentStatus.CANCELLED);
+        Incident inc = incidentRepository.save(incident);
+        QueueIncidentsSingleton.getInstance().updateIncident(inc);
+
+        return ResponseEntity.ok().build();
+    }
+
 
 }

@@ -1,6 +1,7 @@
 {
     "alertSystemApp": {
         "incident" : {
+            "incidentnr": "Nr zgłoszenia",
             "home": {
                 "title": "Zgłoszenie nr",
                 "createLabel": "Dodaj Incident",
@@ -32,7 +33,11 @@
             "fillingDate" : "Czas zgłoszenia",
             "edit": "Edytuj dane",
             "next": "Przekaż służbom",
+            "nextpolice": "Przekaż policji                 ",
+            "nextfire": "Przekaż straży pożarnej           ",
+            "nextemergency": "Przekaż pogotowiu ratunkowemu",
             "call": "Dzwoń do zgłaszającego",
+            "callinprogress":"W trakcie połączenia...",
             "cancel": "Odrzuć zgłoszenie"
 
         }

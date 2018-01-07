@@ -5,9 +5,9 @@
         .module('alertSystemApp')
         .controller('IncidentDialogController', IncidentDialogController);
 
-    IncidentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Incident'];
+    IncidentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'TestDab'];
 
-    function IncidentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Incident) {
+    function IncidentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, TestDab) {
         var vm = this;
 
         vm.incident = entity;
@@ -25,12 +25,10 @@
         function save () {
             vm.isSaving = true;
             if (vm.incident.id !== null) {
-                Incident.update(vm.incident, onSaveSuccess, onSaveError);
+                TestDab.update(vm.incident, onSaveSuccess, onSaveError);
             } else {
-                Incident.save(vm.incident, onSaveSuccess, onSaveError);
             }
         }
-
         function onSaveSuccess (result) {
             $scope.$emit('alertSystemApp:incidentUpdate', result);
             $uibModalInstance.close(result);

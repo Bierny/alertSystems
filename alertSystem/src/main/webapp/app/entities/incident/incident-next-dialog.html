@@ -1,0 +1,29 @@
+<form name="deleteForm" ng-submit="vm.confirmDelete(vm.incident.id)">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" data-translate="entity.next.title">Confirm delete operation</h4>
+    </div>
+    <div class="modal-body">
+        <button type="button" class="button" style="color: white; font-size: 25px;background-color:#001fff;    width: 580px;
+    text-align: center;">
+            <span class="glyphicon glyphicon-random"></span>
+            <span class="hidden-sm-down" data-translate="alertSystemApp.incident.nextpolice"> Edit</span>
+        </button><br><br>
+        <button type="button" class="button" style="color: white; font-size: 25px;background-color:red;    width: 580px;
+    text-align: center;">
+            <span class="glyphicon glyphicon-random"></span>
+            <span class="hidden-sm-down" data-translate="alertSystemApp.incident.nextfire"> Edit</span>
+        </button><br><br>
+        <button type="button" class="button" style="color: red; font-size: 25px;background-color:#e5e5e5;    width: 580px;
+    text-align: center;">
+            <span class="glyphicon glyphicon-random"></span>
+            <span class="hidden-sm-down" data-translate="alertSystemApp.incident.nextemergency"> Edit</span>
+        </button>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+    </div>
+</form>

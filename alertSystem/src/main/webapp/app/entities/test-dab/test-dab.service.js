@@ -25,7 +25,6 @@
                 method: 'PUT',
                 transformRequest: function (data) {
                     var copy = angular.copy(data);
-                    copy.second = DateUtils.convertLocalDateToServer(copy.second);
                     return angular.toJson(copy);
                 }
             },

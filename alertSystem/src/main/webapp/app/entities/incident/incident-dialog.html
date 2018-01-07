@@ -4,20 +4,27 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myIncidentLabel" data-translate="alertSystemApp.incident.home.createOrEditLabel">Create or edit a Incident</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.incident.id">
-            <label for="id" data-translate="global.field.id">ID</label>
+            <label for="id" data-translate="alertSystemApp.incident.notifier">ID</label>
+            <input type="text" class="form-control" id="notifier" name="notifier"
+                    ng-model="vm.incident.notifier.name" readonly />
+        </div>
+        <div class="form-group" ng-show="vm.incident.id">
+            <input type="text" class="form-control" id="surname" name="surname"
+                   ng-model="vm.incident.notifier.surname" readonly />
+        </div>
+        <div class="form-group" ng-show="vm.incident.id">
+            <label for="id" data-translate="alertSystemApp.incident.phone">ID</label>
             <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.incident.id" readonly />
+                   ng-model="vm.incident.notifier.phone" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" data-translate="alertSystemApp.incident.kind" for="field_kind">Kind</label>
-            <input type="text" class="form-control" name="kind" id="field_kind"
-                    ng-model="vm.incident.kind"
-                    />
+            <label class="control-label" data-translate="alertSystemApp.incident.isNotifierVictim" for="field_lifeDanger">Life Danger</label>
+            <input type="checkbox" name="isNotifierVictim" id="field_isNotifierVictim"
+                   ng-model="vm.incident.isNotifierVictim"/>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="alertSystemApp.incident.location" for="field_location">Location</label>
@@ -26,15 +33,33 @@
                     />
         </div>
         <div class="form-group">
+            <label class="control-label" data-translate="alertSystemApp.incident.lifeDanger" for="field_lifeDanger">Life Danger</label>
+            <input type="checkbox" name="lifeDanger" id="field_lifeDanger"
+                   ng-model="vm.incident.lifeDanger"/>
+        </div>
+        <div class="form-group">
             <label class="control-label" data-translate="alertSystemApp.incident.serviceKind" for="field_serviceKind">Service Kind</label>
-            <input type="text" class="form-control" name="serviceKind" id="field_serviceKind"
-                    ng-model="vm.incident.serviceKind"
+            <input type="text" class="form-control" name="lifeDanger" id="field_serviceKind"
+                    ng-model="vm.incident.kind"
                     />
         </div>
         <div class="form-group">
-            <label class="control-label" data-translate="alertSystemApp.incident.lifeDanger" for="field_lifeDanger">Life Danger</label>
-                <input type="checkbox" name="lifeDanger" id="field_lifeDanger"
-                          ng-model="vm.incident.lifeDanger"/>
+            <label class="control-label" data-translate="alertSystemApp.incident.other" for="field_serviceKind">Service Kind</label>
+            <input type="text" class="form-control" name="lifeDanger" id="field_serviceKindother"
+                    ng-model="vm.incident.otherCircumstances"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="alertSystemApp.incident.howManyVictims" for="field_serviceKind">Service Kind</label>
+            <input type="text" class="form-control" name="lifeDanger" id="field_howManyVictims"
+                    ng-model="vm.incident.howManyVictims"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="alertSystemApp.incident.fillingDate" for="field_serviceKind">Service Kind</label>
+            <input type="text" class="form-control" name="lifeDanger" id="field_sfillingDate"
+                   ng-model="vm.incident.fillingDate"
+                    />
         </div>
 
     </div>
