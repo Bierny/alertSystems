@@ -11,6 +11,7 @@
         "kind": "Powód",
         "other": "Inne okoliczności",
         "title": "Witamy, Java Hipsterze!",
+        "maptitle": "Mapa",
         "subtitle": "To jest twoja strona domowa",
         "logged": {
             "message": "Jesteś zalogowany jako użytkownik \"{{username}}\"."

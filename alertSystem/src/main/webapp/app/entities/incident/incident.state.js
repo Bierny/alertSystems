@@ -191,6 +191,29 @@
                             $state.go('^');
                         });
                 }]
+            }).state('incident-detail.mapa', {
+                parent: 'incident-detail',
+                url: '/detail/mapa/:loc',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'app/entities/incident/incident-map-dialog.html',
+                        controller: 'IncidentMapController',
+                        controllerAs: 'vm',
+                        size: 'md',
+                        resolve: {
+                            entity: ['Incident', function(Incident) {
+                                return Incident.get({id : $stateParams.id}).$promise;
+                            }]
+                        }
+                    }).result.then(function() {
+                            $state.go('incident', null, { reload: 'false' });
+                        }, function() {
+                            $state.go('^');
+                        });
+                }]
             });
     }
 

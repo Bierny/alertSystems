@@ -17,7 +17,7 @@
         $scope.labels = ["Zagrożenie życia", "Brak zagrożenia"];
 
         $scope.labels2 = ["Przesłane", "W trakcie obsługi", 'Zakończone', 'Anulowane'];
-        $scope.labels4 = ["1", "d 1 do 5", 'od 6 do 10', 'Więcej niż'];
+        $scope.labels4 = ["1", "d 1 do 5", 'od 6 do 10', 'Więcej niż 10'];
         $scope.labels3 = ["Styczeń", 'Luty', 'Marzec', 'Kwiecień', 'Maj','Czerwiec', 'Lipiec','Sierpień', 'Wrzesień', 'Październik', 'Listopad','Grudzień'];
         $scope.options = {legend: {display: true}};
             $scope.data=[];

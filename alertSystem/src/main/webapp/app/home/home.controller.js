@@ -5,9 +5,9 @@
         .module('alertSystemApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope','TestDab', 'Principal', 'LoginService', '$state','$interval', '$rootScope'];
+    HomeController.$inject = ['$scope','TestDab', 'Principal', 'LoginService', '$state','$interval', '$rootScope','$uibModal'];
 
-    function HomeController ($scope, TestDab,Principal, LoginService, $state,$interval,$rootScope) {
+    function HomeController ($scope, TestDab,Principal, LoginService, $state,$interval,$rootScope,$uibModal) {
         var vm = this;
         $rootScope.fromHome = true;
         vm.account = null;
@@ -56,7 +56,25 @@
         function reloadData(){
 
         }
+        $scope.openMap = function(location){
+            $scope.loc = location;
+            $uibModal.open({
+                templateUrl: 'app/entities/incident/incident-map-dialog.html',
+                controllerAs: 'vm',
+                size: 'md',
+                controller: 'IncidentNextController',
 
+                resolve: {
+                    entity: ['Incident', function(Incident) {
+                        return Incident.get({id : 1}).$promise;
+                    }]
+                }
+            }).result.then(function() {
+                    $state.go('incident', null, { reload: 'false' });
+                }, function() {
+                    $state.go('^');
+                });
+        }
 
 
         $scope.alerts = [{

@@ -34,7 +34,10 @@
         </dd>
         <dt><span data-translate="alertSystemApp.incident.location">Service Kind</span></dt>
         <dd>
-            <span>{{vm.incident.location}}</span>
+            <button type="button" ui-sref="incident-detail.mapa({loc:vm.incident.location})" style="    margin-left: 20px;" >
+                <span class="glyphicon glyphicon-map-marker"></span>
+                <span class="hidden-sm-down" data-translate="alertSystemApp.incident.map"> Edit</span>
+            </button>
         </dd>
         <dt><span data-translate="alertSystemApp.incident.lifeDanger">Life Danger</span></dt>
         <dd>
@@ -84,6 +87,5 @@
         <span class="glyphicon glyphicon-random"></span>
         <span class="hidden-sm-down" data-translate="alertSystemApp.incident.next"> Edit</span>
     </button>
-
 
 </div>

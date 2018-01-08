@@ -36,8 +36,7 @@
                 </div>
             </section>
         </div>
-        <div class="col-md-8 list3 " style="    margin-top: 26px;
-    border-radius: 20px;">
+        <div class="col-md-8 list3 " style="  ">
             <section style="margin-left: -5px;
     margin-right: -5px; ">
                 <!--for demo wrap-->
@@ -63,7 +62,12 @@
                         <tr ng-repeat="alert in alerts | filter:myFilter">
                             <td>{{alert.notifier.name}} <br>{{alert.notifier.surname}}</td>
                             <td>{{alert.notifier.phone}}</td>
-                            <td>{{alert.location}}</td>
+                            <td style="color: black">
+                                <button type="button" ng-click="openMap(alert.location)" style="    margin-left: 20px;" >
+                                    <span class="glyphicon glyphicon-map-marker"></span>
+                                    <span class="hidden-sm-down" data-translate="home.maptitle"> Edit</span>
+                                </button>
+                            </td>
                             <td>
                                 <span ng-if="alert.lifeDanger">
                                     <span class="glyphicon glyphicon-ok"></span>

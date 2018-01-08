@@ -103,6 +103,9 @@
         "next":{
             "title": "Przekazanie odpowiednim służbom"
         },
+        "map":{
+            "title": "Lokalizacja zgłoszenia"
+        },
         "validation": {
             "required": "To pole jest wymagane.",
             "minlength": "Wartość musi mieć długość co najmniej {{min}} znaków.",

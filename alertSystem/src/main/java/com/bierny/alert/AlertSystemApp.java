@@ -115,7 +115,7 @@ public class AlertSystemApp {
                 incident.setLifeDanger(true);
 
             }
-            incident.setLocation("123123x123123123");
+            incident.setLocation("-45.363882,131.044922");
             incident.setNotifier(notifier);
             incident.setOtherCircumstances("nic ciekawego");
             if(i % 2 == 1){
