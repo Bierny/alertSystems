@@ -1,47 +1,22 @@
 <div>
     <h2 data-translate="configuration.title">Configuration</h2>
-
-    <span data-translate="configuration.filter">Filter (by prefix)</span> <input type="text" ng-model="filter" class="form-control">
-    <label ng-hide="filteredConfig.length === 0">Spring configuration</label>
-    <table class="table table-condensed table-striped table-bordered table-responsive"
-        style="table-layout:fixed" ng-hide="filteredConfig.length === 0">
-        <thead>
-        <tr>
-            <th ng-click="predicate = 'prefix'; reverse=!reverse" class="col-sm-4"><span data-translate="configuration.table.prefix">Prefix</span></th>
-            <th data-translate="configuration.table.properties" class="col-sm-8">Properties</th>
-        </tr>
-        </thead>
-
-        <tr ng-repeat="entry in filtered = (vm.configuration | filter:filter | orderBy:predicate:reverse)">
-            <td><span>{{entry.prefix}}</span></td>
-            <td>
-                <div class="row" ng-repeat="(key, value) in entry.properties">
-                    <div class="col-md-4">{{key}}</div>
-                    <div class="col-md-8">
-                        <span class="pull-right label label-default break">{{value}}</span>
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>
-    <div ng-repeat="(key, value) in vm.allConfiguration">
-        <label ng-hide="filtered.length === 0"><span>{{key}}</span></label>
-        <table class="table table-condensed table-striped table-bordered table-responsive"
-               style="table-layout:fixed" ng-hide="filtered.length === 0">
-            <thead>
-            <tr>
-                <th class="col-sm-4">Property</th>
-                <th class="col-sm-8">Value</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="item in filtered = (value | filter:filter)">
-                <td class="break">{{item.key}}</td>
-                <td class="break">
-                    <span class="pull-right label label-default break">{{item.val}}</span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div>
+    <button style="margin-right: 100px;" type="button" class="btn " ng-click="vm.refresh(1)"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;<span data-translate="configuration.one">Refresh</span></button>
+    <button style="margin-right: 100px;" type="button" class="btn " ng-click="vm.refresh(2)"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;<span data-translate="configuration.two">Refresh</span></button>
+    <button style="margin-right: 100px;" type="button" class="btn " ng-click="vm.refresh(3)"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;<span data-translate="configuration.three">Refresh</span></button>
+    <button type="button" class="btn " ng-click="vm.refresh(4)"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;<span data-translate="configuration.four">Refresh</span></button>
     </div>
+<br><br>
+    <canvas ng-show="chosen == 1" id="doughnut" class="chart chart-doughnut"
+            chart-data="data" chart-labels="labels" chart-options="options">
+    </canvas>
+    <canvas ng-show="chosen == 2" id="doughnut2" class="chart chart-doughnut"
+            chart-data="data2" chart-labels="labels2" chart-options="options">
+    </canvas>
+    <canvas ng-show="chosen == 3" id="bar" class="chart chart-bar"
+            chart-data="data3" chart-labels="labels3" chart-series="series">
+    </canvas>
+    <canvas ng-show="chosen == 4" id="bar2" class="chart chart-bar"
+            chart-data="data4" chart-labels="labels4" chart-series="series4">
+    </canvas>
 </div>

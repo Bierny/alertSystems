@@ -100,15 +100,30 @@ public class AlertSystemApp {
         notifier.setName("john");
         notifier.setSurname("Blaskowicz");
         notifier.setPhone("656565135135");
-        for(int i = 0; i <5; i++) {
+        for(int i = 0; i <15; i++) {
             Incident incident = new Incident();
+            if(i % 2 == 1){
             incident.setIsNotifierVictim(false);
+            }else{
+                incident.setIsNotifierVictim(true);
+
+            }
             incident.setKind("wypadek");
-            incident.setLifeDanger(true);
+            if(i % 2 == 1){
+                incident.setLifeDanger(false);
+            }else{
+                incident.setLifeDanger(true);
+
+            }
             incident.setLocation("123123x123123123");
             incident.setNotifier(notifier);
             incident.setOtherCircumstances("nic ciekawego");
-            incident.setSufferer(false);
+            if(i % 2 == 1){
+                incident.setSufferer(false);
+            }else{
+                incident.setSufferer(true);
+
+            }
             incident.setHowManyVictims(i);
             incident.setFillingDate(new Date());
             incidentRepository.save(incident);

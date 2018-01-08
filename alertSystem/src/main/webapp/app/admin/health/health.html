@@ -1,34 +1,48 @@
 <div>
-    <h2 data-translate="health.title">Health Checks</h2>
+    <h2 data-translate="userManagement.home.titleHistory">Users</h2>
+    <jhi-alert></jhi-alert>
 
-    <p>
-        <button type="button" class="btn btn-primary" ng-click="vm.refresh()"><span class="glyphicon glyphicon-refresh"></span>&nbsp;<span data-translate="health.refresh.button">Refresh</span>
-        </button>
-    </p>
-
-    <table id="healthCheck" class="table table-striped">
-        <thead>
-            <tr>
-                <th class="col-md-7" data-translate="health.table.service">Service Name</th>
-                <th class="col-md-2 text-center" data-translate="health.table.status">Status</th>
-                <th class="col-md-2 text-center" data-translate="health.details.details">Details</th>
-
+    <div class="table-responsive">
+        <br>
+        <table class="jh-table table table-striped" style="border: 1px solid black;
+    table-layout: fixed;
+    width: 1100px;">
+            <thead>
+            <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()" style="">
+                <th jh-sort-by="id" style="width: 49px;"><span data-translate="global.field.id">ID</span><span class="glyphicon glyphicon-sort"></span></th>
+                <th><span data-translate="userManagement.incident.notifier">Login</span> </th>
+                <th><span data-translate="userManagement.incident.phone">Email</span> </th>
+                <th style="width: 121px;"> <span data-translate="userManagement.incident.isNotifierVictim">Lang Key</span></th>
+                <th><span data-translate="userManagement.incident.status">Profiles</span></th>
+                <th ><span data-translate="userManagement.incident.serviceKind">Created Date</span></th>
+                <th ><span data-translate="userManagement.incident.lifeDanger">Last Modified By</span> </th>
+                <th style="width: 129px;"><span data-translate="userManagement.incident.location">Last Modified By</span> </th>
+                <th ><span data-translate="userManagement.incident.other">Last Modified By</span> </th>
+                <th ><span data-translate="userManagement.incident.fillingDate">Last Modified By</span> </th>
+                <th style="width: 103px" ><span data-translate="userManagement.incident.user">Last Modified By</span> </th>
+                <th ><span data-translate="userManagement.incident.serviceDate">Last Modified By</span> </th>
             </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="health in vm.healthData">
-                <td>{{'health.indicator.' + vm.baseName(health.name) | translate}} {{vm.subSystemName(health.name)}}</td>
-                <td class="text-center">
-                    <span class="label" ng-class="vm.getLabelClass(health.status)">
-                        {{'health.status.' + health.status | translate}}
-                    </span>
-                </td>
-                <td class="text-center">
-                    <a class="hand" ng-click="vm.showHealth(health)" ng-show="health.details || health.error">
-                        <i class="glyphicon glyphicon-eye-open"></i>
-                    </a>
-                </td>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in vm.users track by user.id" style="">
+                <td>{{user.id}}</td>
+                <td>{{user.notifier.name}}<br>{{user.notifier.surname}}</td>
+                <td>{{user.notifier.phone}}</td>
+                <td>{{user.isNotifierVictim}}</td>
+                <td>{{user.incidentStatus}}</td>
+                <td>{{user.kind}}</td>
+                <td>{{user.lifeDanger }}</td>
+                <td>{{user.location}}</td>
+                <td>{{user.otherCircumstances}}</td>
+                <td>{{user.fillingDate | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{user.user.firstName }}<br>{{user.user.lastName}}</td>
+                <td>{{user.serviceDate | date:'dd/MM/yy HH:mm'}}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
 </div>

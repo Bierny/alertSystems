@@ -27,10 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * REST controller for managing TestDab.
@@ -79,6 +76,9 @@ public class IncidentsResource {
     public ResponseEntity<Incident> updateIncident(@RequestBody Incident incident) throws URISyntaxException {
         log.debug("REST request to update Incident : {}", incident);
         incident.setUser(userService.getUserWithAuthorities());
+        java.sql.Timestamp date = new java.sql.Timestamp(new java.util.Date().getTime());
+
+        incident.setServiceDate(date);
         incidentRepository.save(incident);
         QueueIncidentsSingleton.getInstance().updateIncident(incident);
 

@@ -5,59 +5,91 @@
         .module('alertSystemApp')
         .controller('JhiHealthCheckController', JhiHealthCheckController);
 
-    JhiHealthCheckController.$inject = ['JhiHealthService', '$uibModal'];
+    JhiHealthCheckController.$inject = ['Principal', 'User', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'JhiLanguageService','AdminIncidents'];
 
-    function JhiHealthCheckController (JhiHealthService, $uibModal) {
+    function JhiHealthCheckController (Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants, JhiLanguageService,AdminIncidents) {
         var vm = this;
 
-        vm.updatingHealth = true;
-        vm.getLabelClass = getLabelClass;
-        vm.refresh = refresh;
-        vm.showHealth = showHealth;
-        vm.baseName = JhiHealthService.getBaseName;
-        vm.subSystemName = JhiHealthService.getSubSystemName;
+        vm.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
+        vm.currentAccount = null;
+        vm.languages = null;
+        vm.loadAll = loadAll;
+        vm.setActive = setActive;
+        vm.users = [];
+        vm.page = 1;
+        vm.totalItems = null;
+        vm.clear = clear;
+        vm.links = null;
+        vm.loadPage = loadPage;
+        vm.predicate = pagingParams.predicate;
+        vm.reverse = pagingParams.ascending;
+        vm.itemsPerPage = paginationConstants.itemsPerPage;
+        vm.transition = transition;
 
-        vm.refresh();
+        vm.loadAll();
+        JhiLanguageService.getAll().then(function (languages) {
+            vm.languages = languages;
+        });
+        Principal.identity().then(function(account) {
+            vm.currentAccount = account;
+        });
 
-        function getLabelClass (statusState) {
-            if (statusState === 'UP') {
-                return 'label-success';
-            } else {
-                return 'label-danger';
+        function setActive (user, isActivated) {
+            user.activated = isActivated;
+            User.update(user, function () {
+                vm.loadAll();
+                vm.clear();
+            });
+        }
+
+        function loadAll () {
+            AdminIncidents.query({
+                page: pagingParams.page - 1,
+                size: vm.itemsPerPage,
+                sort: sort()
+            }, onSuccess, onError);
+        }
+
+        function onSuccess(data, headers) {
+            vm.links = ParseLinks.parse(headers('link'));
+            vm.totalItems = headers('X-Total-Count');
+            vm.queryCount = vm.totalItems;
+            vm.page = pagingParams.page;
+            vm.users = data;
+        }
+
+        function onError(error) {
+            AlertService.error(error.data.message);
+        }
+
+        function clear () {
+            vm.user = {
+                id: null, login: null, firstName: null, lastName: null, email: null,
+                activated: null, langKey: null, createdBy: null, createdDate: null,
+                lastModifiedBy: null, lastModifiedDate: null, resetDate: null,
+                resetKey: null, authorities: null
+            };
+        }
+
+        function sort () {
+            var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+            if (vm.predicate !== 'id') {
+                result.push('id');
             }
+            return result;
         }
 
-        function refresh () {
-            vm.updatingHealth = true;
-            JhiHealthService.checkHealth().then(function (response) {
-                vm.healthData = JhiHealthService.transformHealthData(response);
-                vm.updatingHealth = false;
-            }, function (response) {
-                vm.healthData =  JhiHealthService.transformHealthData(response.data);
-                vm.updatingHealth = false;
+        function loadPage (page) {
+            vm.page = page;
+            vm.transition();
+        }
+
+        function transition () {
+            $state.transitionTo($state.$current, {
+                page: vm.page,
+                sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
+                search: vm.currentSearch
             });
         }
-
-        function showHealth (health) {
-            $uibModal.open({
-                templateUrl: 'app/admin/health/health.modal.html',
-                controller: 'HealthModalController',
-                controllerAs: 'vm',
-                size: 'lg',
-                resolve: {
-                    currentHealth: function() {
-                        return health;
-                    },
-                    baseName: function() {
-                        return vm.baseName;
-                    },
-                    subSystemName: function() {
-                        return vm.subSystemName;
-                    }
-
-                }
-            });
-        }
-
     }
 })();

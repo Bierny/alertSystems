@@ -1,10 +1,14 @@
 {
     "configuration": {
-        "title": "Konfiguracja",
+        "title": "Statystyki",
         "filter": "Filtruj (po prefiksie)",
         "table": {
             "prefix": "Prefiks",
             "properties": "Właściwości"
-        }
+        },
+        "one":"Zgłoszenia z zagrożeniem życia",
+        "two":"Statusy zgłoszeń",
+        "three":"Ilość zgłoszeń na miesiąc",
+        "four": "Ilość poszkodowanych"
     }
 }

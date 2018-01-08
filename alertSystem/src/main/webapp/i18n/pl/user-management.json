@@ -2,6 +2,7 @@
     "userManagement": {
         "home": {
             "title": "Użytkownicy",
+            "titleHistory":"Historia zgłoszeń",
             "createLabel": "Stwórz nowego użytkownika",
             "createOrEditLabel": "Stwórz lub edytuj użytkownika"
         },
@@ -25,6 +26,51 @@
         "createdBy": "Utworzony przez",
         "createdDate": "Data utworzenia",
         "lastModifiedBy": "Zmodyfikowany przez",
-        "lastModifiedDate": "Data modyfikacji"
+        "lastModifiedDate": "Data modyfikacji",
+
+        "incident" : {
+            "incidentnr": "Nr zgłoszenia",
+            "home": {
+                "title": "Zgłoszenie nr",
+                "createLabel": "Dodaj Incident",
+                "createOrEditLabel": "Dodaj lub edytuj: Incident"
+            },
+            "created": "Utworzono nowy Incident z identyfikatorem {{ param }}",
+            "updated": "Uaktualniono Incident z identyfikatorem {{ param }}",
+            "deleted": "Usunięto Incident z identyfikatorem {{ param }}",
+            "delete": {
+                "question": "Czy na pewno chcesz usunąć Incident {{ id }}?"
+            },
+            "detail": {
+                "title": "Incident"
+            },
+            "tablename": "Zgłoszenia",
+            "rcvbutton": "Odbierz zgłoszenie",
+            "howmanynotify":"Liczba zgłoszeń",
+            "howmanydanger":"Liczba zagrożeń życia",
+            "notifier": "Zgłaszający",
+            "location":"Lokalizacja",
+            "phone":"Nr telefonu",
+            "lifeDanger":"Zagrożenie życia",
+            "isNotifierVictim": "Czy zgłaszający jest poszkodowany",
+            "serviceKind": "Powód",
+            "howManyVictims": "Liczba poszkodowanych",
+            "other": "Inne okoliczności",
+            "title": "Witamy, Java Hipsterze!",
+            "subtitle": "To jest twoja strona domowa",
+            "fillingDate" : "Czas zgłoszenia",
+            "edit": "Edytuj dane",
+            "next": "Przekaż służbom",
+            "nextpolice": "Przekaż policji                 ",
+            "nextfire": "Przekaż straży pożarnej           ",
+            "nextemergency": "Przekaż pogotowiu ratunkowemu",
+            "call": "Dzwoń do zgłaszającego",
+            "callinprogress":"W trakcie połączenia...",
+            "cancel": "Odrzuć zgłoszenie",
+            "status": "Status",
+            "user": "Obsługujący",
+            "serviceDate": "Czas obsługi"
+
+        }
     }
 }

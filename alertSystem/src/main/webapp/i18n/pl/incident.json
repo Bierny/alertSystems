@@ -24,7 +24,7 @@
             "location":"Lokalizacja",
             "phone":"Nr telefonu",
             "lifeDanger":"Zagrożenie życia",
-            "isNotifierVictim": "Czy zgłaszający jest poszkodowany?",
+            "isNotifierVictim": "Czy zgłaszający jest poszkodowany",
             "serviceKind": "Powód",
             "howManyVictims": "Liczba poszkodowanych",
             "other": "Inne okoliczności",
