@@ -36,5 +36,7 @@ dependencies {
     implementation files('lib/universal-image-loader-1.9.5.jar')
     implementation files('lib/android-query-full.0.26.7.jar')
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.github.markushi:circlebutton:1.1'
+
 
 }

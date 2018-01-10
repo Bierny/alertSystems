@@ -27,6 +27,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -79,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
     private Uri pictureUri;
     private ImageView imageView;
     private ProfileTracker mProfileTracker;
-
+    private AccessTokenTracker accessTokenTracker;
+    private TextView helloText;
     private void setFacebookData(LoginResult loginResult)
     {
         GraphRequest request = GraphRequest.newMeRequest(
@@ -90,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         // Application code
                         Log.i("Response",response.toString());
                         if(Profile.getCurrentProfile() == null) {
+                            accessTokenTracker.startTracking();
                             mProfileTracker = new ProfileTracker() {
                                 @Override
                                 protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
@@ -147,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         //pref = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         pref = this.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-
         fbButton = findViewById(R.id.fb_login_btn);
         button = (Button) findViewById(R.id.button);
         textView = (TextView) findViewById(R.id.textView);
@@ -163,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
+                System.out.print("");
             }
 
             @Override
@@ -170,6 +174,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken,
+                                                       AccessToken currentAccessToken) {
+                if (currentAccessToken == null) {
+                        pref.edit().clear().commit();
+                        showLoginPage();
+                }
+            }
+        };
 
 
         new PublishMessage().execute();
@@ -236,30 +251,16 @@ public class MainActivity extends AppCompatActivity {
     }
     private void showLoggedPage() throws IOException {
         setContentView(R.layout.activity_main);
-//        Picasso.with(this).load(pref.getString("picUriKey","")).placeholder(R.mipmap.ic_launcher)
-//                .error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
-//
-//            @Override
-//            public void onSuccess() {
-//
-//            }
-//
-//            @Override
-//            public void onError() {
-//
-//            }
-//        });
 
-//        imageLoader.loadImage("https://graph.facebook.com/v2.2/" + pref.getString("picUriKey","")+ "/picture?height=120&type=normal", new SimpleImageLoadingListener() {
-//            @Override
-//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                imageView.setImageBitmap(loadedImage);
-//            }
-//        });
         AQuery aq = new AQuery(this);
         boolean memCache = true;
         boolean fileCache = true;
         aq.id(R.id.image_id).image("https://graph.facebook.com/v2.2/" + pref.getString("picUriKey","")+ "/picture?height=120&type=normal", memCache, fileCache);
+        helloText = findViewById(R.id.hello);
+
+        helloText.setText("Witaj "+pref.getString("nameKey", "") + " " + pref.getString("surnameKey",""));
+
+
     }
 
     @Override
@@ -291,6 +292,8 @@ public class MainActivity extends AppCompatActivity {
         String uri = "localhost";
         factory.setHost(uri);
     }
+
+
 
     private class PublishMessage extends AsyncTask  {
 
@@ -326,6 +329,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        accessTokenTracker.stopTracking();
         publishThread.interrupt();
     }
 

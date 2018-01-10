@@ -19,19 +19,7 @@ public class SecondScreen extends Activity {
         setContentView(R.layout.second_layout);
     }
 
-    public void onSend(View view) {
-        Intent fromIntent = getIntent();
-        Incident data = (Incident) fromIntent.getSerializableExtra("data");
 
-        EditText text = (EditText) findViewById(R.id.second);
-        String str = String.valueOf(text.getText());
-        data.setIsNotifierVictim(Boolean.valueOf(str));
-        Intent toIntent = new Intent(this, ThirdScreen.class);
-        toIntent.putExtra("data", data);
-        final int result = 1;
-        startActivityForResult(toIntent, result);
-
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -41,5 +29,30 @@ public class SecondScreen extends Activity {
         resultIntent.putExtra("data", fromData);
         setResult(RESULT_OK, resultIntent);
         finish();
+    }
+
+    public void back(View view) {
+    }
+
+    public void yes(View view) {
+         Intent fromIntent = getIntent();
+        Incident data = (Incident) fromIntent.getSerializableExtra("data");
+
+        data.setIsNotifierVictim(Boolean.TRUE);
+        Intent toIntent = new Intent(this, ThirdScreen.class);
+        toIntent.putExtra("data", data);
+        final int result = 1;
+        startActivityForResult(toIntent, result);
+    }
+
+    public void no(View view) {
+        Intent fromIntent = getIntent();
+        Incident data = (Incident) fromIntent.getSerializableExtra("data");
+
+        data.setIsNotifierVictim(Boolean.FALSE);
+        Intent toIntent = new Intent(this, ThirdScreen.class);
+        toIntent.putExtra("data", data);
+        final int result = 1;
+        startActivityForResult(toIntent, result);
     }
 }

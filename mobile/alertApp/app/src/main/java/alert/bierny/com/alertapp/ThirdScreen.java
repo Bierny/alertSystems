@@ -20,20 +20,7 @@ public class ThirdScreen extends Activity {
         setContentView(R.layout.third_layout);
     }
 
-    public void onSend(View view) {
-        Intent fromIntent = getIntent();
-        Incident data = (Incident) fromIntent.getSerializableExtra("data");
 
-        EditText text = (EditText) findViewById(R.id.third);
-        String str = String.valueOf(text.getText());
-        data.setLifeDanger(Boolean.valueOf(str));
-        Intent toIntent = new Intent(this, FourthScreen.class);
-        toIntent.putExtra("data", data);
-        final int result = 1;
-        startActivityForResult(toIntent, result);
-
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -44,5 +31,30 @@ public class ThirdScreen extends Activity {
         resultIntent.putExtra("data", fromData);
         setResult(RESULT_OK, resultIntent);
         finish();
+    }
+
+    public void back(View view) {
+    }
+
+    public void yes(View view) {
+        Intent fromIntent = getIntent();
+        Incident data = (Incident) fromIntent.getSerializableExtra("data");
+
+        data.setLifeDanger(Boolean.TRUE);
+        Intent toIntent = new Intent(this, FourthScreen.class);
+        toIntent.putExtra("data", data);
+        final int result = 1;
+        startActivityForResult(toIntent, result);
+    }
+
+    public void no(View view) {
+        Intent fromIntent = getIntent();
+        Incident data = (Incident) fromIntent.getSerializableExtra("data");
+
+        data.setLifeDanger(Boolean.FALSE);
+        Intent toIntent = new Intent(this, FourthScreen.class);
+        toIntent.putExtra("data", data);
+        final int result = 1;
+        startActivityForResult(toIntent, result);
     }
 }

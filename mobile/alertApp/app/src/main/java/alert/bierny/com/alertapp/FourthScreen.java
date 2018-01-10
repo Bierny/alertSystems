@@ -23,7 +23,7 @@ public class FourthScreen extends Activity {
         Intent fromIntent = getIntent();
         Incident data = (Incident) fromIntent.getSerializableExtra("data");
 
-        EditText text = (EditText) findViewById(R.id.fourth);
+        EditText text = (EditText) findViewById(R.id.edit_text_id);
         String str = String.valueOf(text.getText());
         data.setHowManyVictims(Integer.valueOf(str));
         Intent toIntent = new Intent(this, FifthScreen.class);
