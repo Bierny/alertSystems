@@ -16,6 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SecondScreen"
+            android:label="Get it"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".ThirdScreen"
+            android:label="Get it2"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".FourthScreen"
+            android:label="Get it3"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".FifthScreen"
+            android:label="Get it4"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".SixthScreen"
+            android:label="Get it5"
+            android:theme="@style/AppTheme"/>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/fb_app_id"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
