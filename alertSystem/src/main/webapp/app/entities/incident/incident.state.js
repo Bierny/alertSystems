@@ -204,6 +204,9 @@
                         controllerAs: 'vm',
                         size: 'md',
                         resolve: {
+                            loc: function(){
+                                return null;
+                            },
                             entity: ['Incident', function(Incident) {
                                 return Incident.get({id : $stateParams.id}).$promise;
                             }]

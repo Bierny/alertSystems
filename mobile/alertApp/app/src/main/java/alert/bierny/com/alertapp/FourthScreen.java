@@ -19,20 +19,6 @@ public class FourthScreen extends Activity {
         setContentView(R.layout.fourth_layout);
     }
 
-    public void onSend(View view) {
-        Intent fromIntent = getIntent();
-        Incident data = (Incident) fromIntent.getSerializableExtra("data");
-
-        EditText text = (EditText) findViewById(R.id.edit_text_id);
-        String str = String.valueOf(text.getText());
-        data.setHowManyVictims(Integer.valueOf(str));
-        Intent toIntent = new Intent(this, FifthScreen.class);
-        toIntent.putExtra("data", data);
-        final int result = 1;
-        startActivityForResult(toIntent, result);
-
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -43,5 +29,20 @@ public class FourthScreen extends Activity {
         resultIntent.putExtra("data", fromData);
         setResult(RESULT_OK, resultIntent);
         finish();
+    }
+
+    public void next(View view) {
+        Intent fromIntent = getIntent();
+        Incident data = (Incident) fromIntent.getSerializableExtra("data");
+
+        EditText text = (EditText) findViewById(R.id.edit_text_id);
+        if(text.getText() !=null && !text.getText().toString().equals("")){
+        String str = String.valueOf(text.getText());
+        data.setHowManyVictims(Integer.valueOf(str));
+        }
+        Intent toIntent = new Intent(this, FifthScreen.class);
+        toIntent.putExtra("data", data);
+        final int result = 1;
+        startActivityForResult(toIntent, result);
     }
 }

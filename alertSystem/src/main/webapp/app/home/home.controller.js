@@ -27,7 +27,9 @@
             function onSuccess(data, headers) {
                $scope.alerts = data;
                 var data2 = data.filter($scope.myFilter);
-               $scope.id= $rootScope.id = data2[0].id;
+                if(data2.length>0) {
+                    $scope.id = $rootScope.id = data2[0].id;
+                }
                 $scope.loading=false;
             }
             function onError(error) {
@@ -40,7 +42,7 @@
                     loadAll();
                 }
 
-            }, 50000);
+            }, 1000);
 
         $scope.myFilter = function (item) {
             return item.incidentStatus =='SENT';
@@ -62,9 +64,10 @@
                 templateUrl: 'app/entities/incident/incident-map-dialog.html',
                 controllerAs: 'vm',
                 size: 'md',
-                controller: 'IncidentNextController',
+                controller: 'IncidentMapController',
 
                 resolve: {
+                    loc:function(){return $scope.loc},
                     entity: ['Incident', function(Incident) {
                         return Incident.get({id : 1}).$promise;
                     }]

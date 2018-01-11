@@ -19,11 +19,11 @@ public class SixthScreen extends Activity {
         setContentView(R.layout.sixth_layout);
     }
 
-    public void onSend(View view) {
+    public void next(View view) {
         Intent fromIntent = getIntent();
         Incident data = (Incident) fromIntent.getSerializableExtra("data");
 
-        EditText text = (EditText) findViewById(R.id.sixth);
+        EditText text = (EditText) findViewById(R.id.edit_text_id);
         String str = String.valueOf(text.getText());
         data.setOtherCircumstances(str);
 //        Intent toIntent = new Intent(this, FourthScreen.class);

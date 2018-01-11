@@ -39,6 +39,8 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -187,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        new PublishMessage().execute();
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -293,6 +294,18 @@ public class MainActivity extends AppCompatActivity {
         factory.setHost(uri);
     }
 
+    public void okAgree(View view) {
+        setContentView(R.layout.activity_main);
+        helloText = findViewById(R.id.hello);
+        helloText.setText("Witaj "+pref.getString("nameKey", "") + " " + pref.getString("surnameKey",""));
+        AQuery aq = new AQuery(this);
+        boolean memCache = true;
+        boolean fileCache = true;
+        aq.id(R.id.image_id).image("https://graph.facebook.com/v2.2/" + pref.getString("picUriKey","")+ "/picture?height=120&type=normal", memCache, fileCache);
+
+
+
+    }
 
 
     private class PublishMessage extends AsyncTask  {
@@ -300,11 +313,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected Object doInBackground(Object[] objects) {
+
         String message = "Yolki polki";
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("192.168.99.1");
+        factory.setHost("192.168.43.49");
         factory.setUsername("alert");
         factory.setPassword("alert");
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            message = mapper.writeValueAsString(inc);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         Connection connection = null;
         try {
             connection = factory.newConnection();
@@ -351,14 +371,17 @@ public class MainActivity extends AppCompatActivity {
         getScreenIntent.putExtra("data",incident);
         startActivityForResult(getScreenIntent, result);
     }
-
+    Incident inc;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == 1) {
             super.onActivityResult(requestCode, resultCode, data);
             TextView view = (TextView) findViewById(R.id.textView);
-            Incident inc = (Incident) data.getSerializableExtra("data");
-            view.append(inc.toString());
+            inc = (Incident) data.getSerializableExtra("data");
+            new PublishMessage().execute();
+            setContentView(R.layout.activity_send);
+
+
         }else{
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }

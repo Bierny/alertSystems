@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "alert.bierny.com.alertapp"
-        minSdkVersion 27
+        minSdkVersion 24
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -37,6 +37,11 @@ dependencies {
     implementation files('lib/android-query-full.0.26.7.jar')
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.github.markushi:circlebutton:1.1'
+    implementation (
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.4.1'],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.4.1'],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.4.1']
+    )
 
 
 }

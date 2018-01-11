@@ -5,9 +5,9 @@
         .module('alertSystemApp')
         .controller('IncidentMapController',IncidentMapController);
 
-    IncidentMapController.$inject = ['$uibModalInstance', 'entity', 'TestDab','$state','$stateParams','$scope'];
+    IncidentMapController.$inject = ['$uibModalInstance', 'entity', 'TestDab','$state','$stateParams','$scope','loc'];
 
-    function IncidentMapController($uibModalInstance, entity, TestDab,$state,$stateParams,$scope) {
+    function IncidentMapController($uibModalInstance, entity, TestDab,$state,$stateParams,$scope,loc) {
         var vm = this;
 
         vm.incident = entity;
@@ -17,8 +17,12 @@
         function clear () {
             $uibModalInstance.dismiss('cancel');
         }
-        $scope.loc = $stateParams.loc;
-
+        if($stateParams.loc) {
+            $scope.loc = $stateParams.loc;
+        }else{
+            $scope.loc = loc;
+        }
+    console.log("tutaj ",$scope.loc);
         function confirmDelete (id) {
             TestDab.delete({id: id},
                 function () {
