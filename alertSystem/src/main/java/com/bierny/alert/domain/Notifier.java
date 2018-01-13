@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "notifier")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Notifier implements Serializable {
+public class Notifier extends AuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

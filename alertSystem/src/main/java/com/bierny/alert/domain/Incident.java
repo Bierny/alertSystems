@@ -14,7 +14,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "incident")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Incident implements Serializable {
+public class Incident extends AuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class Incident implements Serializable {
     @Column(name = "life_danger")
     private Boolean lifeDanger;
 
-    @Column(name = "notifier")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Notifier notifier;
 
     @Column (name = "isNotifierVictim")

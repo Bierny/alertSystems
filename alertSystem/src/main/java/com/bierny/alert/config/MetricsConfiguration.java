@@ -24,6 +24,12 @@ import java.util.concurrent.TimeUnit;
 @EnableMetrics(proxyTargetClass = true)
 public class MetricsConfiguration extends MetricsConfigurerAdapter {
 
+    @Override
+    @Bean
+    public HealthCheckRegistry getHealthCheckRegistry() {
+        return healthCheckRegistry;
+    }
+
     private static final String PROP_METRIC_REG_JVM_MEMORY = "jvm.memory";
     private static final String PROP_METRIC_REG_JVM_GARBAGE = "jvm.garbage";
     private static final String PROP_METRIC_REG_JVM_THREADS = "jvm.threads";
@@ -56,11 +62,7 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
         return metricRegistry;
     }
 
-    @Override
-    @Bean
-    public HealthCheckRegistry getHealthCheckRegistry() {
-        return healthCheckRegistry;
-    }
+
 
     @PostConstruct
     public void init() {
