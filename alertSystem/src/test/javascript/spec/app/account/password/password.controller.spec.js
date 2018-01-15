@@ -8,35 +8,37 @@ describe('Controller Tests', function() {
 
         var $scope, $httpBackend, $q;
         var MockAuth;
-        var createController;
+        var controller;
 
         beforeEach(inject(function($injector) {
             $scope = $injector.get('$rootScope').$new();
             $q = $injector.get('$q');
             $httpBackend = $injector.get('$httpBackend');
-
             MockAuth = jasmine.createSpyObj('MockAuth', ['changePassword']);
             var locals = {
                 '$scope': $scope,
-                'Auth': MockAuth
+                'MockAuth': MockAuth
             };
-            createController = function() {
+            controller = function() {
                 $injector.get('$controller')('PasswordController as vm', locals);
             }
         }));
 
+
         it('should show error if passwords do not match', function() {
-            //GIVEN
-            createController();
+            controller();
             $scope.vm.password = 'password1';
             $scope.vm.confirmPassword = 'password2';
-            //WHEN
+
             $scope.vm.changePassword();
-            //THEN
+
             expect($scope.vm.doNotMatch).toBe('ERROR');
             expect($scope.vm.error).toBeNull();
             expect($scope.vm.success).toBeNull();
         });
+
+
+
         it('should call Auth.changePassword when passwords match', function() {
             //GIVEN
             MockAuth.changePassword.and.returnValue($q.resolve());

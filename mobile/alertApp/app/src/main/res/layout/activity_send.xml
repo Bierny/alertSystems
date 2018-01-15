@@ -43,18 +43,17 @@
             android:fontFamily="@font/brandongrotesque_light"
             />
         <TextView
-            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="POMYŚLNIE"
+            android:text="@string/success"
             android:textStyle="bold"
-
             android:textColor="#1aa7b8"
-            android:textSize="40dp"
+            android:textSize="40sp"
             android:fontFamily="@font/brandongrotesque_light"
             />
+
         <Button
             android:layout_marginLeft="5dp"
             android:layout_width="375dp"

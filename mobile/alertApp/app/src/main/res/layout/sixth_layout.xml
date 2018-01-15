@@ -81,14 +81,15 @@
             android:textSize="15dp"
             android:fontFamily="@font/brandongrotesque_light"
             />
+
         <EditText
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_width="305dp"
             android:layout_height="200dp"
             android:layout_marginTop="8dp"
             android:textStyle="bold"
             android:id="@+id/edit_text_id"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:inputType="textMultiLine"
             android:gravity="center"
             android:layout_gravity="center"

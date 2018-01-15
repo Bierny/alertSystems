@@ -157,19 +157,17 @@ public class IncidentResourceIntTest {
     @Test
     @Transactional
     public void getIncident() throws Exception {
-        // Initialize the database
         incidentRepository.saveAndFlush(incident);
-
-        // Get the incident
         restIncidentMockMvc.perform(get("/api/incidents/{id}", incident.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(incident.getId().intValue()))
-            .andExpect(jsonPath("$.kind").value(DEFAULT_KIND.toString()))
-            .andExpect(jsonPath("$.location").value(DEFAULT_LOCATION.toString()))
-            .andExpect(jsonPath("$.serviceKind").value(DEFAULT_SERVICE_KIND.toString()))
-            .andExpect(jsonPath("$.lifeDanger").value(DEFAULT_LIFE_DANGER.booleanValue()));
+            .andExpect(jsonPath("$.kind").value(DEFAULT_KIND))
+            .andExpect(jsonPath("$.location").value(DEFAULT_LOCATION))
+            .andExpect(jsonPath("$.serviceKind").value(DEFAULT_SERVICE_KIND))
+            .andExpect(jsonPath("$.lifeDanger").value(DEFAULT_LIFE_DANGER));
     }
+
 
     @Test
     @Transactional

@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private LoginButton fbButton;
     private TextView fbView;
     private CallbackManager callbackManager;
-    private String locaLoca="";
+    private String locaLoca = "";
     private String firstName = "";
     private String lastName = "";
     private Uri pictureUri;
@@ -85,30 +85,24 @@ public class MainActivity extends AppCompatActivity {
     private ProfileTracker mProfileTracker;
     private AccessTokenTracker accessTokenTracker;
     private TextView helloText;
-    private void setFacebookData(LoginResult loginResult)
-    {
+
+    private void setFacebookData(LoginResult loginResult) {
         GraphRequest request = GraphRequest.newMeRequest(
                 loginResult.getAccessToken(),
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        // Application code
-                        Log.i("Response",response.toString());
-                        if(Profile.getCurrentProfile() == null) {
+                        if (Profile.getCurrentProfile() == null) {
                             accessTokenTracker.startTracking();
                             mProfileTracker = new ProfileTracker() {
                                 @Override
                                 protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                                     getDataFromFb();
-
                                     mProfileTracker.stopTracking();
                                 }
                             };
-                            // no need to call startTracking() on mProfileTracker
-                            // because it is called by its constructor, internally.
-                        }else{
+                        } else {
                             getDataFromFb();
-
                         }
                     }
                 });
@@ -123,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
         String id = profile.getId();
         String link = profile.getLinkUri().toString();
-        Log.i("Link",link);
+        Log.i("Link", link);
         SharedPreferences.Editor editor = pref.edit();
 
         editor.putString("nameKey", profile.getFirstName());
@@ -161,9 +155,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 setFacebookData(loginResult);
-
-
-
             }
 
             @Override
@@ -182,8 +173,8 @@ public class MainActivity extends AppCompatActivity {
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken,
                                                        AccessToken currentAccessToken) {
                 if (currentAccessToken == null) {
-                        pref.edit().clear().commit();
-                        showLoginPage();
+                    pref.edit().clear().apply();
+                    showLoginPage();
                 }
             }
         };
@@ -193,9 +184,7 @@ public class MainActivity extends AppCompatActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                locaLoca=location.getLatitude() + ","+ location.getLongitude();
-                System.out.println("\n"+ location.getLatitude() + " "+ location.getLongitude());
-                //textView.append("\n"+ location.getLatitude() + " "+ location.getLongitude());
+                locaLoca = location.getLatitude() + "," + location.getLongitude();
             }
 
             @Override
@@ -215,23 +204,23 @@ public class MainActivity extends AppCompatActivity {
             }
 
         };
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-               requestPermissions(new String[]{
-                       Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,
-                       Manifest.permission.INTERNET
-               },10);
+                requestPermissions(new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.INTERNET
+                }, 10);
                 return;
             }
-        }else{
+        } else {
             configureButton();
         }
-        locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
+        locationManager.requestLocationUpdates("gps", 500, 0, locationListener);
 
-        if(!pref.getBoolean("logged",false)){
+        if (!pref.getBoolean("logged", false)) {
             showLoginPage();
 
-        }else{
+        } else {
             try {
                 showLoggedPage();
             } catch (IOException e) {
@@ -241,44 +230,42 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
-
-
     }
+
     private void showLoginPage() {
         setContentView(R.layout.nolog_layout);
 
     }
+
     private void showLoggedPage() throws IOException {
         setContentView(R.layout.activity_main);
 
         AQuery aq = new AQuery(this);
         boolean memCache = true;
         boolean fileCache = true;
-        aq.id(R.id.image_id).image("https://graph.facebook.com/v2.2/" + pref.getString("picUriKey","")+ "/picture?height=120&type=normal", memCache, fileCache);
+        aq.id(R.id.image_id).image("https://graph.facebook.com/v2.2/" + pref.getString("picUriKey", "") + "/picture?height=120&type=normal", memCache, fileCache);
         helloText = findViewById(R.id.hello);
 
-        helloText.setText("Witaj "+pref.getString("nameKey", "") + " " + pref.getString("surnameKey",""));
+        helloText.setText("Witaj " + pref.getString("nameKey", "") + " " + pref.getString("surnameKey", ""));
 
 
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode){
+        switch (requestCode) {
             case 10:
-                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     configureButton();
                 return;
         }
     }
 
     private void configureButton() {
-        button.setOnClickListener(new View.OnClickListener(){
+        button.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
 
             }
@@ -297,55 +284,54 @@ public class MainActivity extends AppCompatActivity {
     public void okAgree(View view) {
         setContentView(R.layout.activity_main);
         helloText = findViewById(R.id.hello);
-        helloText.setText("Witaj "+pref.getString("nameKey", "") + " " + pref.getString("surnameKey",""));
+        helloText.setText("Witaj " + pref.getString("nameKey", "") + " " + pref.getString("surnameKey", ""));
         AQuery aq = new AQuery(this);
         boolean memCache = true;
         boolean fileCache = true;
-        aq.id(R.id.image_id).image("https://graph.facebook.com/v2.2/" + pref.getString("picUriKey","")+ "/picture?height=120&type=normal", memCache, fileCache);
-
+        aq.id(R.id.image_id).image("https://graph.facebook.com/v2.2/" + pref.getString("picUriKey", "") + "/picture?height=120&type=normal", memCache, fileCache);
 
 
     }
 
 
-    private class PublishMessage extends AsyncTask  {
-
-
-    @Override
-    protected Object doInBackground(Object[] objects) {
-
-        String message = "Yolki polki";
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("192.168.43.49");
-        factory.setUsername("alert");
-        factory.setPassword("alert");
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            message = mapper.writeValueAsString(inc);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+    private class PublishMessage extends AsyncTask {
+        private ConnectionFactory setConnectionFactory(){
+            ConnectionFactory factory = new ConnectionFactory();
+            factory.setHost("192.168.43.49");
+            factory.setUsername("alert");
+            factory.setPassword("alert");
+            return factory;
         }
-        Connection connection = null;
-        try {
-            connection = factory.newConnection();
-            Channel channel = connection.createChannel();
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-            channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
-            System.out.println(" [x] Sent '" + message + "'");
-
-            channel.close();
-            connection.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
-            e.printStackTrace();
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            String message = "0";
+            ConnectionFactory factory = setConnectionFactory();
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                message = mapper.writeValueAsString(inc);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            Connection connection = null;
+            try {
+                connection = factory.newConnection();
+                Channel channel = connection.createChannel();
+                channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+                channel.basicPublish("", QUEUE_NAME, null, message.getBytes("UTF-8"));
+                System.out.println(" [x] Sent '" + message + "'");
+                channel.close();
+                connection.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
-        return null;
-    }
-
 
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -368,13 +354,15 @@ public class MainActivity extends AppCompatActivity {
         incident.setLocation(locaLoca);
 
         final int result = 1;
-        getScreenIntent.putExtra("data",incident);
+        getScreenIntent.putExtra("data", incident);
         startActivityForResult(getScreenIntent, result);
     }
+
     Incident inc;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 1) {
+        if (requestCode == 1) {
             super.onActivityResult(requestCode, resultCode, data);
             TextView view = (TextView) findViewById(R.id.textView);
             inc = (Incident) data.getSerializableExtra("data");
@@ -382,7 +370,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_send);
 
 
-        }else{
+        } else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }

@@ -7,6 +7,7 @@
     <string name="log_out">Wyloguj</string>
     <string name="alert.bierny.com.alertapp.logout_text">Wyloguj</string>
     <string name="log_in">Zaloguj się</string>
+    <string name="success">POMYŚLNIE</string>
 
     <string-array name="kind">
         <item>Wypadek samochodowy</item>
